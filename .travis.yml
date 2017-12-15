@@ -1,0 +1,27 @@
+matrix:
+  include:
+    - language: ruby
+      rvm: 
+        - 2.2
+        - jruby
+        - ruby 2.4.0p0
+      services:
+        - mysql
+      env:
+        -TRAVIS_DB_PASSWORD=""
+      before_script:
+        - cd api
+        - bundle install
+        - rails db:create RAILS_ENV=test
+        - rails db:schema:load RAILS_ENV=test
+      script:
+        # Run tests
+        - rspec
+        # Run style checks
+        - rubocop
+
+    # - language: javascript
+    #   before_script:
+    #     - cd view-app
+    #   script:
+    #     - yarn
