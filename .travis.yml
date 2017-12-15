@@ -1,9 +1,10 @@
 matrix:
   include:
     - language: ruby
-      rvm: 
+      rvm:
         - 2.2
         - jruby
+        - 2.0.0-p247
       services:
         - mysql
       env:
