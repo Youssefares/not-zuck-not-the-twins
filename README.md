@@ -18,7 +18,7 @@ We beat everybody to it!
 
 ### Before commiting
  1. Run ```rspec``` inside the api directory as we add tests.
- 2. Run ```rubocop``` to ensure not stylistic issues. (The travis pipeline will fail if rubocop fails!)
+ 2. Run ```rubocop``` to ensure no stylistic issues. (The travis pipeline will fail if rubocop fails!)
 
 
 ### Styling localy
