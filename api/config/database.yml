@@ -16,7 +16,7 @@ default: &default
   username: root
   password: <%= ENV['TRAVIS_DB_PASSWORD'] || 'password' %>
   socket: /var/run/mysqld/mysqld.sock
-
+  # host: 127.0.0.1
 development:
   <<: *default
   database: not_zuck_development

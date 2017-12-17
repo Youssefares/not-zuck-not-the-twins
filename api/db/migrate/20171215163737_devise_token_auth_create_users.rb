@@ -18,7 +18,13 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[5.1]
       t.string :nickname
       t.string :image
       t.string :email
-
+      t.string :last_name
+      t.string :gender
+      t.string :birthdate
+      t.string :hometown
+      t.string :pic #assuming it's base 64 encoded
+      t.string :relationship_status #Yeah people can be in a relationship, yet not married, get over it
+      t.string :about
       ## Tokens
       t.text :tokens
 
