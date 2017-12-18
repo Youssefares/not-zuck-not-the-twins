@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 20171217200945) do
 
   create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "body"
-    t.boolean "is_public"
+    t.boolean "is_public", default: true, null: false
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
