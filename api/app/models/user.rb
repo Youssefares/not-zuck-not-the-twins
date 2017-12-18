@@ -5,5 +5,5 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :rememberable
   include DeviseTokenAuth::Concerns::User
-  has_many :posts
+  has_many :posts, dependent: :destroy
 end
