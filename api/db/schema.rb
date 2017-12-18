@@ -21,6 +21,14 @@ ActiveRecord::Schema.define(version: 20171217200945) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
+  create_table "phone_numbers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "user_id"
+    t.string "number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_phone_numbers_on_user_id"
+  end
+
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
@@ -30,6 +38,12 @@ ActiveRecord::Schema.define(version: 20171217200945) do
     t.string "nickname"
     t.string "image"
     t.string "email"
+    t.string "last_name"
+    t.integer "gender"
+    t.datetime "birthdate"
+    t.string "hometown"
+    t.integer "relationship_status"
+    t.string "about"
     t.text "tokens"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
