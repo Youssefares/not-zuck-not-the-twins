@@ -4,6 +4,7 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[5.1]
   def change
     create_table(:users) do |t|
       ## Required
+      # t.has_many :phone_numbers
       t.string :provider, null: false, default: 'email'
       t.string :uid, null: false, default: ''
 
@@ -19,11 +20,10 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[5.1]
       t.string :image
       t.string :email
       t.string :last_name
-      t.string :gender
-      t.string :birthdate
+      t.integer :gender
+      t.datetime :birthdate
       t.string :hometown
-      t.string :pic #assuming it's base 64 encoded
-      t.string :relationship_status #Yeah people can be in a relationship, yet not married, get over it
+      t.integer :relationship_status #Yeah people can be in a relationship, yet not married, get over it
       t.string :about
       ## Tokens
       t.text :tokens
