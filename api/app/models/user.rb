@@ -5,8 +5,12 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :rememberable
   include DeviseTokenAuth::Concerns::User
+
+  has_many :posts, dependent: :destroy
+
   has_many :PhoneNumber, dependent: :destroy
   enum gender: %i[ male female lesbians male_lesbians homosexual
-     heterosexual bisexual prefer_not_to_specify] #we don't want to piss off emma watson
+                   heterosexual bisexual prefer_not_to_specify]
+  # we don't want to piss off emma watson
   enum relationship_status: %i[single married]
 end
