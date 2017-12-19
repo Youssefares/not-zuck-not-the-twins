@@ -1,0 +1,30 @@
+img{
+  margin: auto;
+}
+
+#navbar{
+  background-color: var(--paper);
+  padding-bottom: 0;
+}
+
+#rickquote{
+  text-align: center;
+  vertical-align: middle;
+}
+
+#rickquote h1{
+  margin: 0;
+  font-family: cursive;
+  line-height: 0;
+}
+
+#rickquote h3{
+  font-family: cursive;
+}
+
+#websitename{
+  color: var(--charchoal);
+  font-family: monospace;
+  margin-left: 24%;
+  margin-top: 2.5%;
+}

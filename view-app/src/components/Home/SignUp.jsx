@@ -1,86 +1,112 @@
-// import React from 'react';
-// import PropTypes from 'prop-types';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-// import './Home.css';
+import { Grid, Button, Radio, Form } from 'semantic-ui-react';
+import './Home.css';
+
 // import { register, ValidationError } from '../../helpers/sessions';
 // import { authenticateUser } from '../../helpers/auth';
 
-// class SignUp extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       email: '',
-//       username: '',
-//       password: '',
-//       confirm_password: '',
-//     };
-//     this.handleChange = this.handleChange.bind(this);
-//     this.handleSubmit = this.handleSubmit.bind(this);
-//   }
+class SignUp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      username: '',
+      password: '',
+      confirm_password: '',
+      gender: '',
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleRadioChange = this.handleRadioChange.bind(this);
+  }
 
-//   handleSubmit(event) {
-//     event.preventDefault();
-//     register(this.state.username, this.state.email, this.state.password)
-//       .then((response) => {
-//         authenticateUser(response.token, this.props.onAuthSuccess);
-//       }).catch((error) => {
-//         if (error instanceof ValidationError) {
-//           alert(error);
-//         }
-//       });
-//   }
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  }
 
-//   handleChange(event) {
-//     this.setState({
-//       [event.target.name]: event.target.value,
-//     });
-//   }
+  handleRadioChange(event, result) {
+    this.setState({
+      [result.name]: result.value,
+    });
+  }
 
-//   render() {
-//     return (
-//       <form onSubmit={this.handleSubmit}>
-//         <fieldset>
-//           <input
-//             type="text"
-//             name="username"
-//             placeholder="username"
-//             id="usernameField"
-//             onChange={this.handleChange}
-//           />
-//           <input
-//             type="email"
-//             name="email"
-//             placeholder="email"
-//             id="emailField"
-//             onChange={this.handleChange}
-//           />
-//           <input
-//             type="password"
-//             name="password"
-//             placeholder="password"
-//             id="passwordField"
-//             onChange={this.handleChange}
-//           />
-//           <input
-//             type="password"
-//             name="confirm password"
-//             placeholder="confirm password"
-//             id="confirmPasswordField"
-//             onChange={this.handleChange}
-//           />
-//           <div className="row">
-//             <button className="button-clear float-right" type="button">
-//               register with facebook
-//             </button>
-//             <input className="button float-right" type="submit" value="register" />
-//           </div>
-//         </fieldset>
-//       </form>
-//     );
-//   }
-// }
+  render() {
+    const gender = this.state.gender === '' ? 'male' : this.state.gender;
+    return (
+      <Form onSubmit={this.props.signUp(this.state)} >
+        <Grid columns={3} padded>
+          <h1>Sign Up</h1>
+          <Grid.Row>
+            <Grid.Column>
+              <Form.Input label="Email" name="email" type="email" onChange={this.handleChange} />
+            </Grid.Column>
+            <Grid.Column>
+              <Form.Input label="Username" name="username" onChange={this.handleChange} />
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <Form.Input
+                label="Password"
+                name="password"
+                type="password"
+                onChange={this.handleChange}
+              />
+            </Grid.Column>
+            <Grid.Column>
+              <Form.Input
+                label="Confirm Password"
+                name="confirm_password"
+                type="password"
+                onChange={this.handleChange}
+              />
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row columns={1}>
+            <Grid.Column>
+              <Form.Group inline>
+                <label htmlFor="gender">
+                Gender
+                </label>
+                <Form.Field
+                  control={Radio}
+                  name="gender"
+                  label="Male"
+                  value="male"
+                  checked={gender === 'male'}
+                  onChange={this.handleRadioChange}
+                />
+                <Form.Field
+                  control={Radio}
+                  name="gender"
+                  label="Female"
+                  value="female"
+                  checked={gender === 'female'}
+                  onChange={this.handleRadioChange}
+                />
+                <Form.Field
+                  control={Radio}
+                  name="gender"
+                  label="Prefer not to specify"
+                  value="prefer_not_to_specify"
+                  checked={gender === 'prefer_not_to_specify'}
+                  onChange={this.handleRadioChange}
+                />
+              </Form.Group>
+              <Button type="submit">Submit</Button>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Form>
+    );
+  }
+}
 
-// SignUp.propTypes = {
-//   onAuthSuccess: PropTypes.func.isRequired,
-// };
-// export default SignUp;
+SignUp.propTypes = {
+  signUp: PropTypes.func.isRequired,
+  // onAuthSuccess: PropTypes.func.isRequired,
+};
+export default SignUp;
