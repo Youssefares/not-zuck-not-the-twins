@@ -28,3 +28,18 @@ img{
   margin-left: 24%;
   margin-top: 2.5%;
 }
+
+#Add{
+  background-color: white;
+  font-size: 1.1rem;
+  float: left;
+}
+
+.extra.phone{
+  padding-top: 0!important;
+  margin-bottom: 1em;
+}
+
+.phone{
+  padding-bottom: 0!important;
+}
