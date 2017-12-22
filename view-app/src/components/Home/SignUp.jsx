@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Datetime, Icon, Input, Grid, Button, Radio, Form, TextArea } from 'semantic-ui-react';
+import { Icon, Input, Grid, Button, Radio, Form, TextArea } from 'semantic-ui-react';
 import './Home.css';
 
 // import { register, ValidationError } from '../../helpers/sessions';
@@ -66,9 +66,27 @@ class SignUp extends React.Component {
       ));
     }
     return (
-      <Form onSubmit={this.props.signUp(this.state)} >
+      <Form onSubmit={() => { this.props.signUp(this.state); }} >
         <Grid columns={3} padded>
           <h1>Sign Up</h1>
+          <Grid.Row>
+            <Grid.Column>
+              <Form.Input
+                label="First Name"
+                name="name"
+                onChange={this.handleChange}
+                required
+              />
+            </Grid.Column>
+            <Grid.Column>
+              <Form.Input
+                label="Last Name"
+                name="last_name"
+                onChange={this.handleChange}
+                required
+              />
+            </Grid.Column>
+          </Grid.Row>
           <Grid.Row>
             <Grid.Column>
               <Form.Input
@@ -82,7 +100,7 @@ class SignUp extends React.Component {
             <Grid.Column>
               <Form.Input
                 label="Username"
-                name="username"
+                name="nickname"
                 onChange={this.handleChange}
                 required
               />
@@ -153,8 +171,16 @@ class SignUp extends React.Component {
             <Grid.Column>
               <Form.Input
                 label="Birthday"
-                name="birthday"
+                name="birthdate"
                 placeholder="mm/dd/yyyy"
+                onChange={this.handleChange}
+                required
+              />
+            </Grid.Column>
+            <Grid.Column>
+              <Form.Input
+                label="Home Town"
+                name="hometown"
                 onChange={this.handleChange}
                 required
               />
@@ -191,6 +217,7 @@ class SignUp extends React.Component {
                 name="about"
                 label="About"
                 placeholder="Tell us more about you..."
+                onChange={this.handleChange}
               />
               <Button type="submit">Submit</Button>
             </Grid.Column>

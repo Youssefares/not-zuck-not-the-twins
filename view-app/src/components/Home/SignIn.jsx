@@ -11,7 +11,7 @@ class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
+      email: '',
       password: '',
     };
     this.handleChange = this.handleChange.bind(this);
@@ -25,7 +25,7 @@ class SignIn extends React.Component {
 
   render() {
     return (
-      <Form onSubmit={this.props.signIn(this.state)} >
+      <Form onSubmit={() => { this.props.signIn(this.state.email, this.state.password); }} >
         <Grid columns={3} padded>
           <Grid.Row verticleAlign="bottom">
             <Grid.Column>
