@@ -7,10 +7,10 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-users = User.create([{name: 'Youssef', email: 'youssef@gmail.com'}, 
-					 {name: 'Essam', email: 'essam@gmail.com'},
-					 {name: 'Abdelrahman', email: 'abdelrahman@gmail.com'}])
+youssef = User.create(name: 'Youssef', email: 'youssef@gmail.com')
+essam = User.create(name: 'Essam', email: 'essam@gmail.com')
+abdou = User.create(name: 'Abdelrahman', email: 'abdelrahman@gmail.com')
 
-posts = Post.create([{body: "I am youssef", is_public: true, user_id: 1},
-					 {body: "I like potatoes", is_public: true, user_id: 2},
-					 {body: "just one more test case", is_public: true, user_id: 3}])
+posts = Post.create([{body: "I am youssef", is_public: true, user_id: youssef.id},
+					 {body: "I like potatoes", is_public: true, user_id: essam.id},
+					 {body: "just one more test case", is_public: true, user_id: abdou.id}])
