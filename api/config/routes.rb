@@ -4,4 +4,8 @@ Rails.application.routes.draw do
   mount_devise_token_auth_for 'User',
                               at: 'auth',
                               skip: %i[omniauth_callbacks password]
+  resources :users do
+    resources :posts
+  end
+
 end
