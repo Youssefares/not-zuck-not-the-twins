@@ -34,4 +34,9 @@ def friendRequests
   @ids = self.inverse_friendships.where(is_relationship_established: false).pluck(:user_id)
   User.find(@ids)
 end
+  def initiatedRequests
+    @ids = self.friendships.where(is_relationship_established: false).pluck(:friend_id)
+    User.find(@ids)
+  end
+
 end
