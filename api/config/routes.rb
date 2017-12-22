@@ -7,4 +7,6 @@ Rails.application.routes.draw do
                                 registrations: 'devise_patch/registrations'
                               },
                               skip: %i[omniauth_callbacks password]
+  get 'user/show'
+  get 'user/list'
 end

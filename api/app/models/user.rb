@@ -18,4 +18,20 @@ class User < ActiveRecord::Base
 
   enum gender: %i[male female other prefer_not_to_specify]
   enum relationship_status: %i[single married]
+
+  # Functions
+  def isFriendsWith(friend)
+    @friend = friendships.where(is_relationship_established: true, friend_id: friend)
+    if @friend.first.present?
+      return true
+    else
+      return inverse_friendships.where(is_relationship_established: true, user_id: friend).first.present?
+    end
+  end
+
+  # Returns list of users that have requested friendship with current user
+  def friendRequests
+    @ids = inverse_friendships.where(is_relationship_established: false).pluck(:user_id)
+    User.find(@ids)
+  end
 end
