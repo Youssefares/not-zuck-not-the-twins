@@ -1,15 +1,16 @@
 class PostsController < ApplicationController
-  before_action :set_user, only: [:show, :create, :update, :destroy]
+  before_action :set_user, only: [:index, :show, :create, :update, :destroy]
 
   # GET /posts
   def index
-    @posts = User.find(params[:user_id]).posts
+    @posts = @user.posts
 
     render json: @posts
   end
 
   # GET /posts/1
   def show
+  	@post = @user.posts.find(params[:id])
     render json: @post
   end
 
