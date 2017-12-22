@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class PostsController < ApplicationController
-  before_action :set_user, only: [:index, :show, :create, :update, :destroy]
+  before_action :set_user, only: %i[index show create update destroy]
 
   # GET /posts
   def index
@@ -10,7 +12,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1
   def show
-  	@post = @user.posts.find(params[:id])
+    @post = @user.posts.find(params[:id])
     render json: @post
   end
 
@@ -40,13 +42,14 @@ class PostsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:user_id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def post_params
-      params.permit(:body, :is_public)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:user_id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def post_params
+    params.permit(:body, :is_public)
+  end
 end
