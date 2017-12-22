@@ -7,8 +7,9 @@ Rails.application.routes.draw do
 
   resources :users do
     resources :posts
+    get 'feed', action: :feed
   end
-  
+
   get 'user/show'
   get 'user/list'
 end
