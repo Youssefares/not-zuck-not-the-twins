@@ -14,7 +14,7 @@ default: &default
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
-  password: <%= ENV['TRAVIS_DB_PASSWORD'] || 'make' %>
+  password: <%= ENV['TRAVIS_DB_PASSWORD'] || 'password' %>
   socket: /var/run/mysqld/mysqld.sock
   host: 127.0.0.1
 development:
