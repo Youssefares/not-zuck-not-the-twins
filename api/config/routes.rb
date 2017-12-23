@@ -11,10 +11,8 @@ Rails.application.routes.draw do
   resources :users do
     resources :posts
     get 'feed', action: :feed
+    get 'friends', action: :friends
+    get 'friend_requests', action: :friend_requests
   end
 
-  get 'user/show'
-  get 'user/list'
-  get 'user/friends'
-  get 'user/friend_requests'
 end

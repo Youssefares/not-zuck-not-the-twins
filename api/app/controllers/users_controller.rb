@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     end
   end
   
-  def list
+  def index
     @users = User.all
     render json: {
       status: 200,
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
   end
 
   def friends
-    @friends = User.find(params[:id]).get_friends
+    @friends = User.find(params[:user_id]).get_friends
     if @friends.present?
       render json: {
         status: 200,
@@ -50,7 +50,7 @@ class UsersController < ApplicationController
   end
 
   def friend_requests
-    users = User.find(params[:id]).friend_requests
+    users = User.find(params[:user_id]).friend_requests
     render json: {
       result: users,
       message: '',
@@ -59,7 +59,7 @@ class UsersController < ApplicationController
   end
   
   def initiated_requests
-    users = User.find(params[:id]).initiated_requests
+    users = User.find(params[:user_id]).initiated_requests
     render json: {
       result: users,
       message: '',
@@ -68,7 +68,7 @@ class UsersController < ApplicationController
   end
 
   def request_friendship
-    @friendship = Friendship.create(user_id:params[:id], friend_id: params[:friend_id], is_relationship_established: false)
+    @friendship = Friendship.create(user_id:params[:user_id], friend_id: params[:friend_id], is_relationship_established: false)
     if @friendship.present?
       render json: {
         result: @friendship,
@@ -85,7 +85,7 @@ class UsersController < ApplicationController
   end
 
   def accept_friend_request
-    @friendship = self.inverse_friendships.where(user_id:params[:friend], friend_id: params[:id]).first
+    @friendship = self.inverse_friendships.where(user_id:params[:friend], friend_id: params[:user_id]).first
     if @friendship.present?
       @friendship.is_relationship_established = true
       @friendship.save
@@ -105,7 +105,7 @@ class UsersController < ApplicationController
 
 #Could be called to cancel a friend request or delete a friendship
   def delete_friendship
-    user = User.find(params[:id])
+    user = User.find(params[:user_id])
     @friendship = user.friendships.where(friend_id: params[:friend_id]).first || user.inverse_friendships.where(friend_id: params[:user_id])
     if @friendship.present?
       @friendship.destroy
