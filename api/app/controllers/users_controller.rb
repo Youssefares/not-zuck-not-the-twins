@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     if @requested_user.present?
       # hide about me and birthdate if the requested user is not me and is not my friend
       is_my_friend = current_user.friendships.where(friend_id: @requested_user.id, is_relationship_established: true).length > 0
-      
+
       if current_user.id != @requested_user.id && !is_my_friend
         @requested_user.about = nil
         @requested_user.birthdate = nil
@@ -48,6 +48,10 @@ class UsersController < ApplicationController
       @friendship = Friendship.create(user_id:params[:user_id], friend_id: params[:friend_id], is_relationship_established: false)
       if @friendship.valid?
         @friendship.save
+        user = User.find(params[:user_id])
+        friend = User.find(params[:friend_id])
+        user.posts.create(body: user.name + " became friends with " + friend.name, is_public: false).save
+        friend.posts.create(body: friend.name + " became friends with "+ user.name, is_public: false).save
         render status: :created, json: {message: "Successfully created friend request"}.to_json
       else
         render status: :bad_request, json: {message: @friendship.errors.messages}.to_json
@@ -102,7 +106,7 @@ class UsersController < ApplicationController
 
     # get my private posts
     @feed += Post.where(user_id: @user.id, is_public: false)
-    
+
     @feed.sort!  { |a, b| b.updated_at <=> a.updated_at }
 
     render json: @feed
