@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   def show
-    @user = User.find(params[:user_id])
+    @user = User.find(params[:id])
     render status: :ok , json:{user: @user,
       image_url: @user.picture.url}.to_json
 

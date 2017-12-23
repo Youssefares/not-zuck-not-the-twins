@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Grid } from 'semantic-ui-react';
+import { getFeed } from '../../helpers/requests/posts';
 
+import Feed from '../Feed';
 import Navbar from '../Navbar';
 
 class TimelineContainer extends React.Component {
@@ -13,11 +15,11 @@ class TimelineContainer extends React.Component {
   render() {
     return (
       <Grid>
-        <Navbar 
+        <Navbar
           currentName={this.props.currentName}
           currentImage={this.props.currentImage}
         />
-        <h1>Timeline</h1>
+        <Feed request={getFeed} userId={this.props.currentUser} />
       </Grid>
     );
   }

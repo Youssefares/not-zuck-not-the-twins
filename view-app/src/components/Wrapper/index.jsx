@@ -19,6 +19,7 @@ const Wrapper = props => (
         exact
         path="/timeline"
         render={() => (<Timeline
+          currentUser={props.currentUser}
           currentName={props.currentName}
           currentImage={props.currentImage}
         />)}

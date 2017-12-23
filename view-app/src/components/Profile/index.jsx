@@ -5,7 +5,11 @@ import Profile from './Profile';
 import { Dimmer, Loader, Grid } from 'semantic-ui-react';
 
 import { showUser } from '../../helpers/requests/users';
+import { getPosts } from '../../helpers/requests/posts';
+
+
 import Navbar from '../Navbar';
+import Feed from '../Feed';
 
 class ProfileContainer extends React.Component {
   constructor(props) {
@@ -19,7 +23,7 @@ class ProfileContainer extends React.Component {
   componentWillMount() {
     showUser(this.props.userId).then((response) => {
       this.setState({
-        user: response,
+        user: response.user,
         loading: false,
       });
     });
@@ -40,18 +44,19 @@ class ProfileContainer extends React.Component {
           currentImage={this.props.currentImage}
         />
         <Profile
-          email={this.state.user.email}
-          name={this.state.user.name}
-          last_name={this.state.user.last_name}
-          nickname={this.state.user.nickname}
-          image={this.state.user.image}
-          gender={this.state.user.gender}
-          hometown={this.state.user.hometown}
-          relationship_status={this.state.user.relationship_status}
-          created_at={this.state.user.created_at}
-          birthdate={this.state.user.birthdate}
-          about={this.state.user.about}
+          email={this.state.user.email || undefined}
+          name={this.state.user.name || undefined}
+          last_name={this.state.user.last_name || undefined}
+          nickname={this.state.user.nickname || undefined}
+          image={this.state.user.image || undefined}
+          gender={this.state.user.gender || undefined}
+          hometown={this.state.user.hometown || undefined}
+          relationship_status={this.state.user.relationship_status || undefined}
+          created_at={this.state.user.created_at || undefined}
+          birthdate={this.state.user.birthdate || undefined}
+          about={this.state.user.about || undefined}
         />
+        <Feed request={getPosts} userId={this.props.userId}/>
       </Grid>
     );
   }

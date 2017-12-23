@@ -34,6 +34,5 @@ const Navbar = props => (
 Navbar.propTypes = {
   currentName: PropTypes.string.isRequired,
   currentImage: PropTypes.string.isRequired,
-
 };
 export default Navbar;
