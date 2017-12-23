@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     render status: :ok , json: @user
+
   end
 
   def index
@@ -28,8 +29,8 @@ class UsersController < ApplicationController
   end
 
   def request_friendship
-    if (Friendship.where(user_id:params[:user_id], friend_id: params[:friend_id]) ||
-      Friendship.where(user_id: params[:friend_id], friend_id: params[:friend_id])).exists?
+    if Friendship.where(user_id: params[:user_id], friend_id: params[:friend_id]).exists? ||
+       Friendship.where(user_id: params[:friend_id], friend_id: params[:user_id]).exists?
       render status: :not_modified, json: {message: "User already has a relationship with friend"}.to_json
     else
       @friendship = Friendship.create(user_id:params[:user_id], friend_id: params[:friend_id], is_relationship_established: false)

@@ -12,5 +12,12 @@ User.create!(
 )
 
 Post.create!([{ body: 'I am youssef', is_public: true, user_id: 1 },
+              { body: 'this is a private post for youssef', is_public: false, user_id: 1 },
               { body: 'I like potatoes', is_public: true, user_id: 1 },
-              { body: 'just one more test case', is_public: true, user_id: 3 }])
+              { body: 'this is a private post for essam', is_public: false, user_id: 2 },
+              { body: 'just one more test case', is_public: true, user_id: 3 },
+              { body: 'this is a private post for abdelrahman', is_public: false, user_id: 3 }])
+
+
+
+
