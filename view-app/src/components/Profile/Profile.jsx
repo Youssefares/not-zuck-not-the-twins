@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import './Profile.css';
 
 const Profile = props => (
-  ""
+  props.email
 );
 
 Profile.propTypes = {

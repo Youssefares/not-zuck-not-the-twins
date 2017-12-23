@@ -8,8 +8,6 @@ import {
 
 import './App.css';
 import HomeContainer from '../Home';
-import Timeline from '../Timeline';
-import ProfileContainer from '../Profile';
 import Wrapper from '../Wrapper';
 
 import { isUserAuthenticated, currentUser } from '../../helpers/auth';
@@ -26,7 +24,20 @@ class App extends React.Component {
 
   componentWillMount() {
     isUserAuthenticated().then((response) => {
-      this.setState({ currentUser: response.status === 200 ? currentUser() : null });
+      if (response.status === 200) {
+        response.json().then((resp) => {
+          this.setState({
+            currentUser: currentUser(),
+            currentName: resp.data.name,
+            currentEmail: resp.data.email,
+            currentImage: resp.data.image,
+          });
+        });
+      } else {
+        this.setState({
+          currentUser: null,
+        })
+      }
     });
   }
 
@@ -56,7 +67,12 @@ class App extends React.Component {
               if (this.state.currentUser == null) {
                 return <Redirect to="/login" />;
               }
-              return <Wrapper currentUser={this.state.currentUser} />;
+              return (<Wrapper
+                currentUser={this.state.currentUser}
+                currentName={this.state.currentName}
+                currentEmail={this.state.currentEmail}
+                currentImage={this.state.currentImage}
+              />);
             }}
           />
         </Switch>

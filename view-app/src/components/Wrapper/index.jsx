@@ -7,6 +7,7 @@ import {
   Switch,
 } from 'react-router-dom';
 
+
 import './Wrapper.css';
 import Timeline from '../Timeline';
 import ProfileContainer from '../Profile';
@@ -17,13 +18,19 @@ const Wrapper = props => (
       <Route
         exact
         path="/timeline"
-        render={() => <Timeline />}
+        render={() => (<Timeline
+          currentName={props.currentName}
+          currentImage={props.currentImage}
+        />)}
       />
-
       <Route
         exact
         path="/me"
-        render={() => <ProfileContainer userId={props.currentUser} />}
+        render={() => (<ProfileContainer
+          userId={props.currentUser}
+          currentName={props.currentName}
+          currentImage={props.currentImage}
+        />)}
       />
       <Route render={() => <h1>Page not found</h1>} />
     </Switch>
@@ -32,5 +39,9 @@ const Wrapper = props => (
 
 Wrapper.propTypes = {
   currentUser: PropTypes.number.isRequired,
+  currentName: PropTypes.string.isRequired,
+  currentEmail: PropTypes.string.isRequired,
+  currentImage: PropTypes.string.isRequired,
+
 };
 export default Wrapper;

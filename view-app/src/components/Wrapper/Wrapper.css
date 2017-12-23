@@ -1,0 +1,35 @@
+#actions{
+  margin-left: 50%;
+}
+
+#navbar{
+  height: ;
+}
+
+#innerwebsitename{
+  margin-left: 0%;
+  color: var(--charchoal);
+  font-family: monospace;
+  margin-top: 2.5%;
+  margin-bottom: 2.5%;
+}
+
+#websiteimage{
+  width: 72px;
+  margin-right: 4%;
+  margin-left: 28%;
+}
+
+#nameandimage{
+  padding-bottom: 2px;
+  padding-top: 2px;
+}
+
+#me{
+  width: 40%;
+}
+
+#meimage{
+  width: 40px;
+  margin-right: 4%;
+}
