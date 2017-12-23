@@ -6,6 +6,18 @@ html{
   --charcoal: #373737;
 }
 
+#navbar{
+  background-color: var(--paper);
+  padding-bottom: 0;
+}
+#websitename{
+  color: var(--charchoal);
+  font-family: monospace;
+  margin-left: 28%;
+  margin-top: 2.5%;
+  margin-bottom: 2.5%;
+}
+
 .ui.button{
   color: var(--charcoal);
   background-color: var(--silk);
