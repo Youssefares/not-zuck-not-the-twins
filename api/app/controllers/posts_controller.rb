@@ -47,7 +47,7 @@ class PostsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_user
     if current_user.id != params[:user_id]
-      render json: {status: 404, success: 0, message: 'unauthorized'}
+      render status: 401, json: { message: 'unauthorized' }
     end
     @user = current_user
   end

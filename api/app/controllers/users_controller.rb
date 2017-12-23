@@ -11,7 +11,7 @@ class UsersController < ApplicationController
       is_my_friend = current_user.friendships.where(friend_id: @requested_user.id, is_relationship_established: true).length > 0
       
       if current_user.id != @requested_user.id && !is_my_friend
-         @requested_user.about = nil
+        @requested_user.about = nil
         @requested_user.birthdate = nil
       end
     
