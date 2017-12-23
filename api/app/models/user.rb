@@ -34,4 +34,8 @@ class User < ActiveRecord::Base
     ids = friendships.where(is_relationship_established: false).pluck(:friend_id)
     User.find(ids)
   end
+
+  def get_friends
+    User.find(self.friendships.where(is_relationship_established: true).pluck(:friend_id)) + User.find(self.inverse_friendships.where(is_relationship_established: true).pluck(:user_id))
+  end
 end

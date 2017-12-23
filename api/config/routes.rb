@@ -9,4 +9,6 @@ Rails.application.routes.draw do
                               skip: %i[omniauth_callbacks password]
   get 'user/show'
   get 'user/list'
+  get 'user/friends'
+  get 'user/friend_requests'
 end
