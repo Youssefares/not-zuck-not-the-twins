@@ -24,14 +24,20 @@ class App extends React.Component {
 
   componentWillMount() {
     isUserAuthenticated().then((response) => {
-      this.setState({ currentUser: response.status === 200 ? currentUser() : null });
-      response.json().then((resp) => {
-        this.setState({
-          currentName: resp.data.name,
-          currentEmail: resp.data.email,
-          currentImage: resp.data.image,
+      if (response.status === 200) {
+        response.json().then((resp) => {
+          this.setState({
+            currentUser: currentUser(),
+            currentName: resp.data.name,
+            currentEmail: resp.data.email,
+            currentImage: resp.data.image,
+          });
         });
-      });
+      } else {
+        this.setState({
+          currentUser: null,
+        })
+      }
     });
   }
 

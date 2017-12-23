@@ -19,7 +19,7 @@ class ProfileContainer extends React.Component {
   componentWillMount() {
     showUser(this.props.userId).then((response) => {
       this.setState({
-        user: response.result,
+        user: response,
         loading: false,
       });
     });
@@ -35,7 +35,7 @@ class ProfileContainer extends React.Component {
     }
     return (
       <Grid>
-        <Navbar 
+        <Navbar
           currentName={this.props.currentName}
           currentImage={this.props.currentImage}
         />
