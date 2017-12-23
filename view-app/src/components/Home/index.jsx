@@ -1,38 +1,66 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-import { Image, Grid } from 'semantic-ui-react';
+import Home from './Home';
+import { register, logIn, ValidationError, AuthenticationError } from '../../helpers/sessions';
+import { setCurrentUser, setUserHeaders } from '../../helpers/auth';
 
-import './Home.css';
-import SignUp from './SignUp';
-import SignIn from './SignIn';
 
-const Home = () => (
-  <Grid>
-    <Grid.Row id="navbar">
-      <Grid.Column width={6} padded>
-        <h1 id="websitename">social-network-c137</h1>
-      </Grid.Column>
-      <Grid.Column width={10} padded>
-        <SignIn signIn={() => {}} />
-      </Grid.Column>
-    </Grid.Row>
-    <Grid.Row>
-      <Grid.Column width={6} padded>
-        <Image src="./turned_myself.png" />
-        <div id="rickquote">
-          <h3> I turned myself into a social network, Morty!</h3>
-          <h1> I am social network rick! </h1>
-        </div>
-      </Grid.Column>
-      <Grid.Column width={10}>
-        <SignUp signUp={() => {}} />
-      </Grid.Column>
-    </Grid.Row>
-  </Grid>
-);
+class HomeContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.signIn = this.signIn.bind(this);
+    this.signUp = this.signUp.bind(this);
+    this.handleResponse = this.handleResponse.bind(this);
+  }
 
-// Home.propTypes = {
-//   authenticateUser: PropTypes.func.isRequired,
-// };
-export default Home;
+  signIn(email, password) {
+    logIn(email, password).then((response) => {
+      if (response.status === 401) {
+        throw new AuthenticationError('wrong password for user');
+      }
+      this.handleResponse(response);
+    }).catch((error) => {
+      if (error instanceof AuthenticationError) {
+        alert(error.message);
+      }
+    });
+  }
+
+  signUp(signUpData) {
+    register(signUpData).then((response) => {
+      if (response.status === 422) {
+        throw new ValidationError('unable to create user with given data');
+      }
+      this.handleResponse(response);
+    }).catch((error) => {
+      if (error instanceof ValidationError) {
+        alert(error.message);
+      }
+    });
+  }
+
+  handleResponse(response) {
+    const onSuccess = this.props.onSignIn;
+    const headers = {};
+    headers.uid = response.headers.get('uid');
+    headers.client = response.headers.get('client');
+    headers['access-token'] = response.headers.get('access-token');
+    response.json().then((body) => {
+      setCurrentUser(body.data.id);
+      onSuccess();
+    });
+    setUserHeaders(headers);
+  }
+
+  render() {
+    return (
+      <Home signIn={this.signIn} signUp={this.signUp} />
+    );
+  }
+}
+
+HomeContainer.propTypes = {
+  onSignIn: PropTypes.func.isRequired,
+};
+export default HomeContainer;

@@ -13,7 +13,7 @@
 ActiveRecord::Schema.define(version: 20171221094941) do
 
   create_table "friendships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.boolean "is_relationship_established"
+    t.boolean "is_relationship_established", default: false
     t.string "user_id"
     t.string "friend_id"
     t.datetime "created_at", null: false
