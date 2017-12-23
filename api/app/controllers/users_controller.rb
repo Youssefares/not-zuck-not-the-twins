@@ -1,10 +1,21 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  def show
-    @user = User.find(params[:id])
-    render status: :ok , json: @user
+  before_action :authenticate_user!
 
+  def show
+    @requested_user = User.where(id: params[:id]).first
+
+    if @requested_user.present?
+      # hide about me and birthdate if the requested user is not me and is not my friend
+      is_my_friend = current_user.friendships.where(friend_id: @requested_user.id, is_relationship_established: true).length > 0
+      
+      if current_user.id != @requested_user.id && !is_my_friend
+        @requested_user.about = nil
+        @requested_user.birthdate = nil
+      end
+    end
+    render status: :ok , json: @requested_user
   end
 
   def index
@@ -72,16 +83,25 @@ class UsersController < ApplicationController
       }
     end
   end
+
   def feed
     @feed = []
     @user = User.find(params[:user_id])
+
+    # get my friends' private posts
     @user.friendships.each do |friendship|
       next unless friendship.is_relationship_established
 
       # TODO: merge arrays without making new copies
-      @feed += Post.where(user_id: friendship.friend_id, is_public: true)
+      @feed += Post.where(user_id: friendship.friend_id, is_public: false)
     end
 
+    # get all public posts (including my public posts and my friends' public posts)
+    @feed += Post.where(is_public: true)
+
+    # get my private posts
+    @feed += Post.where(user_id: @user.id, is_public: false)
+    
     @feed.sort!  { |a, b| b.updated_at <=> a.updated_at }
 
     render json: @feed

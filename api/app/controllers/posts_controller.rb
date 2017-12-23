@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_user, only: %i[index show create update destroy]
 
   # GET /posts
@@ -45,7 +46,10 @@ class PostsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_user
-    @user = User.find(params[:user_id])
+    if current_user.id != params[:user_id]
+      render status: 401, json: { message: 'unauthorized' }
+    end
+    @user = current_user
   end
 
   # Only allow a trusted parameter "white list" through.
