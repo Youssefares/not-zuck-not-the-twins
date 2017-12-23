@@ -3,10 +3,15 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user, only: %i[index show create update destroy]
+  before_action :check_authority, only: %i[create update destroy]
 
   # GET /posts
   def index
-    @posts = @user.posts
+    if current_user.id == @requested_user.id
+      @posts = @requested_user.posts
+    else
+      @posts = @requested_user.posts.where(is_public: true)
+    end
 
     render json: @posts
   end
@@ -14,12 +19,16 @@ class PostsController < ApplicationController
   # GET /posts/1
   def show
     @post = @user.posts.find(params[:id])
-    render json: @post
+    if @post.is_public
+      render json: @post
+    else
+      render status: 401, json: { message: 'unauthorized' }
+    end
   end
 
   # POST /posts
   def create
-    @post = @user.posts.build(post_params)
+    @post = current_user.posts.build(post_params)
 
     if @post.save
       render json: @post, status: :created
@@ -30,7 +39,7 @@ class PostsController < ApplicationController
 
   # PATCH/PUT /posts/1
   def update
-    if @user.posts.update(post_params)
+    if current_user.posts.update(post_params)
       render json: @post
     else
       render json: @post.errors, status: :unprocessable_entity
@@ -39,17 +48,20 @@ class PostsController < ApplicationController
 
   # DELETE /posts/1
   def destroy
-    @user.posts.find(params[:id]).destroy
+    current_user.posts.find(params[:id]).destroy
   end
 
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_user
-    if current_user.id != params[:user_id]
+    @requested_user = User.find(params[:user_id].to_i)
+  end
+
+  def check_authority
+    if current_user.id != params[:user_id].to_i
       render status: 401, json: { message: 'unauthorized' }
     end
-    @user = current_user
   end
 
   # Only allow a trusted parameter "white list" through.

@@ -15,6 +15,7 @@ class UsersController < ApplicationController
         @requested_user.birthdate = nil
       end
     end
+
     render status: :ok , json: @requested_user
   end
 
