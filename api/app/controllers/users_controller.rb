@@ -16,7 +16,7 @@ class UsersController < ApplicationController
       end
     end
 
-    render status: :ok , json: @requested_user
+    render status: :ok , json: {user: @requested_user, image_url: @requested_user.picture.url}
   end
 
   def index

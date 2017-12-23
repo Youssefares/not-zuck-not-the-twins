@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :rememberable
   include DeviseTokenAuth::Concerns::User
+  before_validation :parse_image
 
   has_many :posts, dependent: :destroy
 
@@ -19,6 +20,10 @@ class User < ActiveRecord::Base
 
   enum gender: %i[male female other prefer_not_to_specify]
   enum relationship_status: %i[single married]
+  has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
+    validates_attachment_content_type :picture, content_type: /\Aimage\/.*\z/
+    do_not_validate_attachment_file_type :picture
+    attr_accessor :image_base
 
   def isfriends_with(friend)
     friendships.where(is_relationship_established: true, friend_id: friend).exists? ||
@@ -38,5 +43,12 @@ class User < ActiveRecord::Base
 
   def get_friends
     User.find(self.friendships.where(is_relationship_established: true).pluck(:friend_id)) + User.find(self.inverse_friendships.where(is_relationship_established: true).pluck(:user_id))
+  end
+
+  private
+  def parse_image
+     image = Paperclip.io_adapters.for(image_base)
+     image.original_filename = "file.jpg"
+      self.picture = image
   end
 end
