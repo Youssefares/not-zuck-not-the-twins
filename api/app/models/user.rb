@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
 
   enum gender: %i[male female other prefer_not_to_specify]
   enum relationship_status: %i[single married]
-  has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
+  has_attached_file :picture, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing/missing.png"
     validates_attachment_content_type :picture, content_type: /\Aimage\/.*\z/
     do_not_validate_attachment_file_type :picture
     attr_accessor :image_base
