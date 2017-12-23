@@ -9,6 +9,8 @@ import {
 import './App.css';
 import HomeContainer from '../Home';
 import Timeline from '../Timeline';
+import ProfileContainer from '../Profile';
+import Wrapper from '../Wrapper';
 
 import { isUserAuthenticated, currentUser } from '../../helpers/auth';
 
@@ -49,15 +51,14 @@ class App extends React.Component {
             }}
           />
           <Route
-            path="/timeline"
+            path="/"
             render={() => {
               if (this.state.currentUser == null) {
                 return <Redirect to="/login" />;
               }
-              return <Timeline />;
+              return <Wrapper currentUser={this.state.currentUser} />;
             }}
           />
-          <Route render={() => <h1>Page not found</h1>} />
         </Switch>
       </Router>
     );
