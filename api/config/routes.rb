@@ -7,6 +7,12 @@ Rails.application.routes.draw do
                                 registrations: 'devise_patch/registrations'
                               },
                               skip: %i[omniauth_callbacks password]
+
+  resources :users do
+    resources :posts
+    get 'feed', action: :feed
+  end
+
   get 'user/show'
   get 'user/list'
   get 'user/friends'

@@ -1,5 +1,6 @@
-class UserController < ApplicationController
+# frozen_string_literal: true
 
+class UsersController < ApplicationController
   def show
     @user = User.where(id:params[:id]).first
     if @user.present?
@@ -135,4 +136,19 @@ class UserController < ApplicationController
       }.to_json
   end
 
+
+  def feed
+    @feed = []
+    @user = User.find(params[:user_id])
+    @user.friendships.each do |friendship|
+      next unless friendship.is_relationship_established
+
+      # TODO: merge arrays without making new copies
+      @feed += Post.where(user_id: friendship.friend_id, is_public: true)
+    end
+
+    @feed.sort!  { |a, b| b.updated_at <=> a.updated_at }
+
+    render json: @feed
+  end
 end
