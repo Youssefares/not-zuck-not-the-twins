@@ -26,9 +26,14 @@ function getPosts(userId) {
 }
 
 function getFeed(userId) {
+  const header = Object.assign({
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  }, currentUserHeaders());
+
   return fetch(`${apiUrl}/users/${userId}/feed`, {
     method: 'GET',
-    headers,
+    headers: header,
     mode: 'cors',
   }).then((response) => {
     if (response.code === 404) {

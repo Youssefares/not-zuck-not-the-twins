@@ -47,10 +47,10 @@ class HomeContainer extends React.Component {
     headers.client = response.headers.get('client');
     headers['access-token'] = response.headers.get('access-token');
     response.json().then((body) => {
+      setUserHeaders(headers);
       setCurrentUser(body.data.id);
       onSuccess();
     });
-    setUserHeaders(headers);
   }
 
   render() {

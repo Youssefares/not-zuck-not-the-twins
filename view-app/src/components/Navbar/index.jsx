@@ -9,7 +9,7 @@ const Navbar = props => (
   <Grid.Row id="navbar">
     <Menu id="menu" secondary>
       <Menu.Item id="nameandimage">
-        <Image id="websiteimage" src="./turned_myself.png" size="small" wrapped />
+        <Image id="websiteimage" src="/turned_myself.png" size="small" wrapped />
         <NavLink to="/timeline" replace>
           <h3 id="innerwebsitename">social-network-c137</h3>
         </NavLink>
@@ -19,7 +19,7 @@ const Navbar = props => (
           <Input icon="search" placeholder="Search..." />
         </Menu.Item>
         <Menu.Item id="me">
-          <Image id="meimage" src="./user.png" size="small" />
+          <Image id="meimage" src="/user.png" size="small" />
           <NavLink to="/me" replace>
             {`Signed in as ${props.currentName}`}
           </NavLink>

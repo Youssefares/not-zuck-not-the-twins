@@ -30,13 +30,13 @@ class App extends React.Component {
             currentUser: currentUser(),
             currentName: resp.data.name,
             currentEmail: resp.data.email,
-            currentImage: resp.data.image,
+            currentImage: resp.data.image || undefined,
           });
         });
       } else {
         this.setState({
           currentUser: null,
-        })
+        });
       }
     });
   }

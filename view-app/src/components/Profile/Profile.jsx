@@ -65,7 +65,7 @@ Profile.propTypes = {
 };
 
 Profile.defaultProps = {
-  image: './user.png',
+  image: '/user.png',
   hometown: 'No Hometown',
   gender: 'Prefers not to specify',
   relationship_status: 'single',

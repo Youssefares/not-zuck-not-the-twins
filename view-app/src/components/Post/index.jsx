@@ -35,7 +35,7 @@ Post.propTypes = {
 };
 
 Post.defaultProps = {
-  userImage: './user.png',
+  userImage: '/user.png',
 };
 
 export default Post;

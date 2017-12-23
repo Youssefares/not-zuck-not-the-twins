@@ -26,6 +26,15 @@ const Wrapper = props => (
       />
       <Route
         exact
+        path="/users/:userId"
+        render={this_props => (<ProfileContainer
+          userId={this_props.match.params.userId}
+          currentName={props.currentName}
+          currentImage={props.currentImage}
+        />)}
+      />
+      <Route
+        exact
         path="/me"
         render={() => (<ProfileContainer
           userId={props.currentUser}
@@ -43,6 +52,5 @@ Wrapper.propTypes = {
   currentName: PropTypes.string.isRequired,
   currentEmail: PropTypes.string.isRequired,
   currentImage: PropTypes.string.isRequired,
-
 };
 export default Wrapper;
