@@ -20,7 +20,9 @@ class PostsController < ApplicationController
   def show
     @post = @user.posts.find(params[:id])
     if @post.is_public
-      render json: @post
+      render json: {post:@post,
+        user_image_url: @user.picture.url
+      }
     else
       render status: 401, json: { message: 'unauthorized' }
     end
