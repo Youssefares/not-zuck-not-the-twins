@@ -65,4 +65,5 @@ export {
   deauthenticateUser,
   isUserAuthenticated,
   currentUser,
+  currentUserHeaders
 };
