@@ -14,8 +14,8 @@ class UsersController < ApplicationController
         @requested_user.about = nil
         @requested_user.birthdate = nil
       end
+    end
     
-    @user = User.find(params[:user_id])
     render status: :ok , json: @requested_user
   end
 
