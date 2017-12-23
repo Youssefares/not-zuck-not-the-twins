@@ -19,7 +19,7 @@ class UsersController < ApplicationController
       }.to_json
     end
   end
-  
+
   def list
     @users = User.all
     render json: {
@@ -32,21 +32,11 @@ class UsersController < ApplicationController
 
   def friends
     @friends = User.find(params[:id]).get_friends
-    if @friends.present?
       render json: {
-        status: 200,
         result: @users,
         message: '',
         success: 1
       }.to_json
-    else
-      render json: {
-        status: 404,
-        result: '',
-        message: @users.errors.messages,
-        success: 0
-      }.to_json
-    end
   end
 
   def friend_requests
@@ -57,7 +47,7 @@ class UsersController < ApplicationController
       success: 1
     }
   end
-  
+
   def initiated_requests
     users = User.find(params[:id]).initiated_requests
     render json: {
