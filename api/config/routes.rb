@@ -12,7 +12,12 @@ Rails.application.routes.draw do
     resources :posts
     get 'feed', action: :feed
     get 'friends', action: :friends
+    get 'show'
     get 'friend_requests', action: :friend_requests
+    get 'initiated_requests', action: :initiated_requests
+    post 'request_friendship', action: :request_friendship
+    post 'accept_friend_request', action: :accept_friend_request
+    post 'delete_friendship', action: :delete_friendship
   end
 
 end
