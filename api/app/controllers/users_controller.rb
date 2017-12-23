@@ -10,15 +10,16 @@ class UsersController < ApplicationController
         success: 1,
         message:''
       }.to_json
-  else
-    render json: {
-      status: 404,
-      result: '',
-      message: 'No user found',
-      success: 0
-    }.to_json
+    else
+      render json: {
+        status: 404,
+        result: '',
+        message: 'No user found',
+        success: 0
+      }.to_json
+    end
   end
-  end
+  
   def list
     @users = User.all
     render json: {
@@ -32,19 +33,20 @@ class UsersController < ApplicationController
   def friends
     @friends = User.find(params[:id]).get_friends
     if @friends.present?
-    render json: {
-      status: 200,
-      result: @users,
-      message: '',
-      success: 1
-    }.to_json
-  else
-    render json: {
-      status: 404,
-      result: '',
-      message: @users.errors.messages,
-      success: 0
-    }.to_json
+      render json: {
+        status: 200,
+        result: @users,
+        message: '',
+        success: 1
+      }.to_json
+    else
+      render json: {
+        status: 404,
+        result: '',
+        message: @users.errors.messages,
+        success: 0
+      }.to_json
+    end
   end
 
   def friend_requests
@@ -55,6 +57,7 @@ class UsersController < ApplicationController
       success: 1
     }
   end
+  
   def initiated_requests
     users = User.find(params[:id]).initiated_requests
     render json: {
@@ -63,6 +66,7 @@ class UsersController < ApplicationController
       success: 0
     }
   end
+
   def request_friendship
     @friendship = Friendship.create(user_id:params[:id], friend_id: params[:friend_id], is_relationship_established: false)
     if @friendship.present?
@@ -134,6 +138,7 @@ class UsersController < ApplicationController
         message: object.errors.messages,
         success: 0
       }.to_json
+    end
   end
 
 
