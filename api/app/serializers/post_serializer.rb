@@ -3,6 +3,6 @@ class PostSerializer < ActiveModel::Serializer
   has_one :user
 
   class UserSerializer < ActiveModel::Serializer
-  	attributes :id, :name, :nickname, :email, :picture
+  	attributes :id, :name, :last_name, :nickname, :email, :picture
   end
 end
