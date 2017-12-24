@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { List, Image, Grid } from 'semantic-ui-react';
+import { Button, List, Image, Grid } from 'semantic-ui-react';
 import './Profile.css';
 
 const Profile = props => (
@@ -46,11 +46,17 @@ const Profile = props => (
         <Grid.Column width={4}>
         </Grid.Column>
       </Grid.Row>
+      <Grid.Row>
+        <Button disabled={props.add_friend} onClick={props.sendRequest} fluid>{props.requestSent || 'Add Friend'}</Button>
+      </Grid.Row>
     </Grid>
   </Grid.Row>
 );
 
 Profile.propTypes = {
+  requestSent: PropTypes.string.isRequired,
+  sendRequest: PropTypes.func.isRequired,
+  add_friend: PropTypes.bool.isRequired,
   email: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   last_name: PropTypes.string.isRequired,

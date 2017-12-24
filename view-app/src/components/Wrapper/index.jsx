@@ -5,6 +5,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
+  Redirect,
 } from 'react-router-dom';
 
 
@@ -19,6 +20,7 @@ const Wrapper = props => (
         exact
         path="/timeline"
         render={() => (<Timeline
+          deauthenticateUser={props.deauthenticateUser}
           currentUser={props.currentUser}
           currentName={props.currentName}
           currentImage={props.currentImage}
@@ -27,8 +29,10 @@ const Wrapper = props => (
       <Route
         exact
         path="/users/:userId"
-        render={this_props => (<ProfileContainer
-          userId={this_props.match.params.userId}
+        render={thisProps => (<ProfileContainer
+          deauthenticateUser={props.deauthenticateUser}
+          currentUser={props.currentUser}
+          userId={thisProps.match.params.userId}
           currentName={props.currentName}
           currentImage={props.currentImage}
         />)}
@@ -37,6 +41,8 @@ const Wrapper = props => (
         exact
         path="/me"
         render={() => (<ProfileContainer
+          deauthenticateUser={props.deauthenticateUser}
+          currentUser={props.currentUser}
           userId={props.currentUser}
           currentName={props.currentName}
           currentImage={props.currentImage}
@@ -48,6 +54,7 @@ const Wrapper = props => (
 );
 
 Wrapper.propTypes = {
+  deauthenticateUser: PropTypes.func.isRequired,
   currentUser: PropTypes.number.isRequired,
   currentName: PropTypes.string.isRequired,
   currentEmail: PropTypes.string.isRequired,

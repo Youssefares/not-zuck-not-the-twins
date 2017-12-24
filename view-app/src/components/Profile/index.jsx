@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Profile from './Profile';
-import { Dimmer, Loader, Grid } from 'semantic-ui-react';
+import { Button, Dimmer, Loader, Grid } from 'semantic-ui-react';
 
-import { showUser } from '../../helpers/requests/users';
+import { showUser, requestFriend } from '../../helpers/requests/users';
 import { getPosts } from '../../helpers/requests/posts';
 
 
@@ -18,6 +18,7 @@ class ProfileContainer extends React.Component {
       loading: true,
       user: {},
     };
+    this.sendFriendRequest = this.sendFriendRequest.bind(this);
   }
 
   componentWillMount() {
@@ -25,6 +26,14 @@ class ProfileContainer extends React.Component {
       this.setState({
         user: response.user,
         loading: false,
+      });
+    });
+  }
+
+  sendFriendRequest() {
+    requestFriend(this.props.currentUser, this.state.user.id).then((response)=> {
+      this.setState({
+        requestSent: 'Request Sent',
       });
     });
   }
@@ -40,10 +49,14 @@ class ProfileContainer extends React.Component {
     return (
       <Grid>
         <Navbar
+          deauthenticateUser={this.props.deauthenticateUser}
           currentName={this.props.currentName}
           currentImage={this.props.currentImage}
         />
         <Profile
+          add_friend={this.state.requestSent === 'Request Sent' || this.state.user.id === this.props.currentUser}
+          sendRequest={this.sendFriendRequest}
+          requestSent={this.requestSent}
           email={this.state.user.email || undefined}
           name={this.state.user.name || undefined}
           last_name={this.state.user.last_name || undefined}
@@ -63,6 +76,7 @@ class ProfileContainer extends React.Component {
 }
 
 ProfileContainer.propTypes = {
+  deauthenticateUser: PropTypes.func.isRequired,
   userId: PropTypes.number.isRequired,
   currentUser: PropTypes.number.isRequired,
   currentName: PropTypes.string.isRequired,

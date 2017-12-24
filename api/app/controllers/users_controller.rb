@@ -48,10 +48,6 @@ class UsersController < ApplicationController
       @friendship = Friendship.create(user_id:params[:user_id], friend_id: params[:friend_id], is_relationship_established: false)
       if @friendship.valid?
         @friendship.save
-        user = User.find(params[:user_id])
-        friend = User.find(params[:friend_id])
-        user.posts.create(body: user.name + " became friends with " + friend.name, is_public: false).save
-        friend.posts.create(body: friend.name + " became friends with "+ user.name, is_public: false).save
         render status: :created, json: {message: "Successfully created friend request"}.to_json
       else
         render status: :bad_request, json: {message: @friendship.errors.messages}.to_json
@@ -65,6 +61,10 @@ class UsersController < ApplicationController
       @friendship = @friendship.first
       @friendship.is_relationship_established = true
       @friendship.save
+      user = User.find(params[:user_id])
+      friend = User.find(params[:friend_id])
+      user.posts.create(body: user.name + " became friends with " + friend.name, is_public: false).save
+      friend.posts.create(body: friend.name + " became friends with "+ user.name, is_public: false).save
       render status: :ok, json: { message: "Successfully accepted friend request"}.to_json
     else
       render status: :bad_request, json: {

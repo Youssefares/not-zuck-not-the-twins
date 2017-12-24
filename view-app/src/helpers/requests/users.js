@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import url from 'url';
 import ExtendableError from 'es6-error';
 import config from '../../config';
 import { currentUserHeaders } from '../auth';
@@ -26,4 +27,58 @@ function showUser(id) {
   });
 }
 
-export { showUser, UserNotFound };
+function requestFriend(id, friendId) {
+  return fetch(`${apiUrl}/users/${id}/request_friendship/${url.format({ query: { friend_id: friendId } })}`, {
+    method: 'POST',
+    headers,
+    mode: 'cors',
+  }).then((response) => {
+    if (response.code === 201) {
+      response.json();
+    }
+  });
+}
+
+
+function friendRequests(id) {
+  return fetch(`${apiUrl}/users/${id}/friend_requests/`, {
+    method: 'GET',
+    headers,
+    mode: 'cors',
+  }).then((response) => {
+    return response.json();
+  });
+}
+
+function acceptFriendRequest(id, friendId) {
+  return fetch(`${apiUrl}/users/${id}/accept_friend_request/${url.format({ query: { friend_id: friendId } })}`, {
+    method: 'POST',
+    headers,
+    mode: 'cors',
+  }).then((response) => {
+    if (response.code === 200) {
+      response.json();
+    }
+  });
+}
+
+function declineFriendRequest(id, friendId) {
+  return fetch(`${apiUrl}/users/${id}/delete_friendship/${url.format({ query: { friend_id: friendId } })}`, {
+    method: 'POST',
+    headers,
+    mode: 'cors',
+  }).then((response) => {
+    if (response.code === 200) {
+      response.json();
+    }
+  });
+}
+
+export {
+  showUser,
+  UserNotFound,
+  requestFriend,
+  friendRequests,
+  acceptFriendRequest,
+  declineFriendRequest,
+};

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import time from 'time-ago';
+import { NavLink } from 'react-router-dom';
 
 import { Icon, Feed } from 'semantic-ui-react';
 import './Post.css';
@@ -10,8 +11,9 @@ const Post = props => (
     <Feed.Label image={props.userImage} />
     <Feed.Content>
       <Feed.Summary>
-        <a>User #{props.userId}</a> posted on his page
+        <NavLink to={`/users/${props.userId}`}>{props.userNickname || props.userName}</NavLink> posted on his page
         <Feed.Date>{time.ago(props.created_at)}</Feed.Date>
+        {props.isPublic ? null : <Icon name="lock" />}
       </Feed.Summary>
       <Feed.Extra text>
         {props.body}
@@ -28,6 +30,8 @@ const Post = props => (
 
 Post.propTypes = {
   userId: PropTypes.number.isRequired,
+  userName: PropTypes.string.isRequired,
+  userNickname: PropTypes.string.isRequired,
   userImage: PropTypes.string,
   body: PropTypes.string.isRequired,
   created_at: PropTypes.string.isRequired,

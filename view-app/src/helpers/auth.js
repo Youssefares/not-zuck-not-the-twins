@@ -55,6 +55,7 @@ function isUserAuthenticated() {
 
 function deauthenticateUser() {
   localStorage.removeItem('currentUser');
+  localStorage.removeItem('userHeaders');
 }
 
 
@@ -65,5 +66,5 @@ export {
   deauthenticateUser,
   isUserAuthenticated,
   currentUser,
-  currentUserHeaders
+  currentUserHeaders,
 };

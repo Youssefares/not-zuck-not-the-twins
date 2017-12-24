@@ -42,8 +42,21 @@ class App extends React.Component {
   }
 
   setCurrentUser() {
-    this.setState({
-      currentUser: currentUser(),
+    isUserAuthenticated().then((response) => {
+      if (response.status === 200) {
+        response.json().then((resp) => {
+          this.setState({
+            currentUser: currentUser(),
+            currentName: resp.data.name,
+            currentEmail: resp.data.email,
+            currentImage: resp.data.image || undefined,
+          });
+        });
+      } else {
+        this.setState({
+          currentUser: null,
+        });
+      }
     });
   }
 
