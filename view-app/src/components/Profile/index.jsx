@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Profile from './Profile';
-import { Button, Dimmer, Loader, Grid } from 'semantic-ui-react';
+import { Dimmer, Loader, Grid } from 'semantic-ui-react';
 
-import { showUser, requestFriend } from '../../helpers/requests/users';
+import { showUser, friendRequests, requestFriend } from '../../helpers/requests/users';
 import { getPosts } from '../../helpers/requests/posts';
 
 
@@ -17,6 +17,7 @@ class ProfileContainer extends React.Component {
     this.state = {
       loading: true,
       user: {},
+      requests: []
     };
     this.sendFriendRequest = this.sendFriendRequest.bind(this);
   }
@@ -26,6 +27,14 @@ class ProfileContainer extends React.Component {
       this.setState({
         user: response.user,
         loading: false,
+      });
+    });
+  }
+
+  componentDidMount() {
+    friendRequests(this.props.currentUser).then((response) => {
+      this.setState({
+        requests: response,
       });
     });
   }
@@ -49,7 +58,9 @@ class ProfileContainer extends React.Component {
     return (
       <Grid>
         <Navbar
+          friendRequests={this.state.requests}
           deauthenticateUser={this.props.deauthenticateUser}
+          currentUser={this.props.currentUser}
           currentName={this.props.currentName}
           currentImage={this.props.currentImage}
         />

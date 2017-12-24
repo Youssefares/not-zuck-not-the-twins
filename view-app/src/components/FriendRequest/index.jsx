@@ -8,14 +8,20 @@ import { Card, Button, Image } from 'semantic-ui-react';
 class FriendRequest extends React.Component {
   constructor(props) {
     super(props);
+    this.accept = this.accept.bind(this);
+    this.decline = this.decline.bind(this);
   }
 
   accept() {
-
+    acceptFriendRequest(this.props.currentUser, this.props.userId).then((response) => {
+      alert("Friend Request accepted");
+    });
   }
 
   decline() {
-
+    declineFriendRequest(this.props.currentUser, this.props.userId).then((response) => {
+      alert("Friend Request declined");
+    });
   }
 
   render() {

@@ -8,7 +8,7 @@ import { UserNotFound } from './users';
 const apiUrl = `http://${config.API_HOST}:${config.API_PORT}`;
 
 // content-headers + auth-headers
-const headers = Object.assign({
+const headers = () => Object.assign({
   Accept: 'application/json',
   'Content-Type': 'application/json',
 }, currentUserHeaders());
@@ -17,7 +17,7 @@ const headers = Object.assign({
 function getPosts(userId) {
   return fetch(`${apiUrl}/users/${userId}/posts`, {
     method: 'GET',
-    headers,
+    headers: headers(),
     mode: 'cors',
   }).then((response) => {
     if (response.code === 404) {
@@ -28,14 +28,9 @@ function getPosts(userId) {
 }
 
 function getFeed(userId) {
-  const header = Object.assign({
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  }, currentUserHeaders());
-
   return fetch(`${apiUrl}/users/${userId}/feed`, {
     method: 'GET',
-    headers: header,
+    headers: headers(),
     mode: 'cors',
   }).then((response) => {
     if (response.code === 404) {
@@ -49,7 +44,7 @@ function getFeed(userId) {
 function post(userId, body, isPublic) {
   return fetch(`${apiUrl}/users/${userId}/posts/${url.format({ query: { body, is_public: isPublic } })}`, {
     method: 'POST',
-    headers,
+    headers: headers(),
     mode: 'cors',
   }).then((response) => {
     if (response.code === 404) {

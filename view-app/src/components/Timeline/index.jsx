@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Grid } from 'semantic-ui-react';
+import { Dimmer, Loader, Grid } from 'semantic-ui-react';
 import { getFeed } from '../../helpers/requests/posts';
 import { friendRequests } from '../../helpers/requests/users';
 
@@ -16,18 +16,27 @@ class TimelineContainer extends React.Component {
     super(props);
     this.state = {
       requests: [],
+      loading: true,
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     friendRequests(this.props.currentUser).then((response) => {
       this.setState({
         requests: response,
+        loading: false,
       });
     });
   }
 
   render() {
+    if (this.state.loading) {
+      return (
+        <Dimmer active>
+          <Loader>Loading</Loader>
+        </Dimmer>
+      );
+    }
     return (
       <Grid>
         <Navbar

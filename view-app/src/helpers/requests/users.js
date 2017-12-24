@@ -7,7 +7,7 @@ import { currentUserHeaders } from '../auth';
 
 const apiUrl = `http://${config.API_HOST}:${config.API_PORT}`;
 // content-headers + auth-headers
-const headers = Object.assign({
+const headers = () => Object.assign({
   Accept: 'application/json',
   'Content-Type': 'application/json',
 }, currentUserHeaders());
@@ -17,7 +17,7 @@ class UserNotFound extends ExtendableError {}
 function showUser(id) {
   return fetch(`${apiUrl}/users/${id}`, {
     method: 'GET',
-    headers,
+    headers: headers(),
     mode: 'cors',
   }).then((response) => {
     if (response.code === 404) {
@@ -30,7 +30,7 @@ function showUser(id) {
 function requestFriend(id, friendId) {
   return fetch(`${apiUrl}/users/${id}/request_friendship/${url.format({ query: { friend_id: friendId } })}`, {
     method: 'POST',
-    headers,
+    headers: headers(),
     mode: 'cors',
   }).then((response) => {
     if (response.code === 201) {
@@ -43,7 +43,7 @@ function requestFriend(id, friendId) {
 function friendRequests(id) {
   return fetch(`${apiUrl}/users/${id}/friend_requests/`, {
     method: 'GET',
-    headers,
+    headers: headers(),
     mode: 'cors',
   }).then((response) => {
     return response.json();
@@ -53,7 +53,7 @@ function friendRequests(id) {
 function acceptFriendRequest(id, friendId) {
   return fetch(`${apiUrl}/users/${id}/accept_friend_request/${url.format({ query: { friend_id: friendId } })}`, {
     method: 'POST',
-    headers,
+    headers: headers(),
     mode: 'cors',
   }).then((response) => {
     if (response.code === 200) {
@@ -65,7 +65,7 @@ function acceptFriendRequest(id, friendId) {
 function declineFriendRequest(id, friendId) {
   return fetch(`${apiUrl}/users/${id}/delete_friendship/${url.format({ query: { friend_id: friendId } })}`, {
     method: 'POST',
-    headers,
+    headers: headers(),
     mode: 'cors',
   }).then((response) => {
     if (response.code === 200) {
