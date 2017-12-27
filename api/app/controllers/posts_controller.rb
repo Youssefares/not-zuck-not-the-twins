@@ -7,27 +7,25 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    if current_user.id != @requested_user.id && !current_user.isfriends_with(@requested_user.id)
-      @posts = @requested_user.posts.where(is_public: true)
-    else
-      @posts = @requested_user.posts
-    end
+    @posts = if current_user.id != @requested_user.id && !current_user.isfriends_with(@requested_user.id)
+               @requested_user.posts.where(is_public: true)
+             else
+               @requested_user.posts
+             end
 
     render json: @posts
   end
 
   # GET /posts/1
   def show
-
     @post = @requested_user.posts.find(params[:id])
     if current_user.id != @requested_user.id && !current_user.isfriends_with(@requested_user.id) && !@post.is_public
       render status: 401, json: { message: 'unauthorized' }
     elsif !@post.present?
       render status: 401, json: { message: 'unauthorized' }
     else
-      render json: {post:@post,
-        user_image_url: @requested_user.picture.url
-      }
+      render json: { post: @post,
+                     user_image_url: @requested_user.picture.url }
     end
   end
 

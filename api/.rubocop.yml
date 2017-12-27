@@ -1,3 +1,4 @@
+inherit_from: .rubocop_todo.yml
 require:
   - rubocop-rspec
 
@@ -27,9 +28,6 @@ Metrics/BlockLength:
   Exclude:
     - spec/**/*
     - config/routes.rb
-
-Metrics/LineLength:
-  Max: 100
 
 Style/Documentation:
   Enabled: false

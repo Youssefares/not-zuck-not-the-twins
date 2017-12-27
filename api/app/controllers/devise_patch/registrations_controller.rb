@@ -8,13 +8,11 @@ module DevisePatch
       super
 
       # FIXME: potentially bug, should check if create is successful first.
-      if params[:phoneNumbers]
-      params[:phoneNumbers].each do |phone_number|
+      params[:phoneNumbers]&.each do |phone_number|
         PhoneNumber.create!(
           user: User.find_by(email: params[:email]),
           number: phone_number
         )
-      end
       end
       # self.create_picture
     end
@@ -28,10 +26,10 @@ module DevisePatch
     end
 
     def create_picture
-    if params[:image_base]
-      picture_params = params[:image_base]
-      @user.add_picture(picture_params[:file_data], picture_params[:file_name])
-    end
+      if params[:image_base]
+        picture_params = params[:image_base]
+        @user.add_picture(picture_params[:file_data], picture_params[:file_name])
+      end
   end
   end
 end

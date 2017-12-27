@@ -6,15 +6,22 @@ We beat everybody to it!
 ### Tinker as follows:
 1. Install mysql.
 
-2. Run ```bundle```
+2. Inside `api` directory, run ```bundle```
 
 3. Create a new mysql database user with info that are found in database.yml (root, password).
 
-4. Run these commands:
+4. Inside `api` directory, run these commands:
 
    - ```rails db:create```
 
    - ```rails db:schema:load```
+
+5. Inside `view-app` directory, run`yarn`.
+
+### Running:
+At the root of the repository, run:
+   - `yarn  api`
+   - `yarn view`
 
 ### Before commiting
  1. Run ```rspec``` inside the api directory as we add tests.

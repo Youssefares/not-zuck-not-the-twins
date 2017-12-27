@@ -5,18 +5,18 @@ class UsersController < ApplicationController
 
   def show
     @requested_user = User.where(id: params[:id]).first
+    render status: :not_found, json: 'user not found' if @requested_user.nil?
+    # hide about me and birthdate if the requested user is not me and is not my friend
+    not_my_friend = current_user.friendships.where(
+      friend_id: @requested_user.id, is_relationship_established: true
+    ).empty?
 
-    if @requested_user.present?
-      # hide about me and birthdate if the requested user is not me and is not my friend
-      is_my_friend = current_user.friendships.where(friend_id: @requested_user.id, is_relationship_established: true).length > 0
-
-      if current_user.id != @requested_user.id && !is_my_friend
-        @requested_user.about = nil
-        @requested_user.birthdate = nil
-      end
+    if current_user.id != @requested_user.id && not_my_friend
+      @requested_user.about = nil
+      @requested_user.birthdate = nil
     end
-    
-    render status: :ok , json: {user: @requested_user, image_url: @requested_user.picture.url}
+
+    render status: :ok, json: { user: @requested_user, image_url: @requested_user.picture.url }
   end
 
   def index
@@ -26,8 +26,8 @@ class UsersController < ApplicationController
 
   def friends
     @user = User.find(params[:user_id])
-      @friends = @user.get_friends
-      render status: :ok, json: @friends
+    @friends = @user.friends
+    render status: :ok, json: @friends
   end
 
   def friend_requests
@@ -43,14 +43,14 @@ class UsersController < ApplicationController
   def request_friendship
     if Friendship.where(user_id: params[:user_id], friend_id: params[:friend_id]).exists? ||
        Friendship.where(user_id: params[:friend_id], friend_id: params[:user_id]).exists?
-      render status: :not_modified, json: {message: "User already has a relationship with friend"}.to_json
+      render status: :not_modified, json: { message: 'User already has a relationship with friend' }.to_json
     else
-      @friendship = Friendship.create(user_id:params[:user_id], friend_id: params[:friend_id], is_relationship_established: false)
+      @friendship = Friendship.create(user_id: params[:user_id], friend_id: params[:friend_id], is_relationship_established: false)
       if @friendship.valid?
         @friendship.save
-        render status: :created, json: {message: "Successfully created friend request"}.to_json
+        render status: :created, json: { message: 'Successfully created friend request' }.to_json
       else
-        render status: :bad_request, json: {message: @friendship.errors.messages}.to_json
+        render status: :bad_request, json: { message: @friendship.errors.messages }.to_json
       end
     end
   end
@@ -63,9 +63,9 @@ class UsersController < ApplicationController
       @friendship.save
       user = User.find(params[:user_id])
       friend = User.find(params[:friend_id])
-      user.posts.create(body: user.name + " became friends with " + friend.name, is_public: false).save
-      friend.posts.create(body: friend.name + " became friends with "+ user.name, is_public: false).save
-      render status: :ok, json: { message: "Successfully accepted friend request"}.to_json
+      user.posts.create(body: user.name + ' became friends with ' + friend.name, is_public: false).save
+      friend.posts.create(body: friend.name + ' became friends with ' + user.name, is_public: false).save
+      render status: :ok, json: { message: 'Successfully accepted friend request' }.to_json
     else
       render status: :bad_request, json: {
         message: @friendship.errors.messages
@@ -73,18 +73,19 @@ class UsersController < ApplicationController
     end
   end
 
-#Could be called to cancel a friend request or delete a friendship
+  # Could be called to cancel a friend request or delete a friendship
   def delete_friendship
     user = User.find(params[:user_id])
-    @friendship = user.friendships.where(friend_id: params[:friend_id]).first || user.inverse_friendships.where(friend_id: params[:user_id]).first
-    if @friendship.present? #Can't call exists on a single record
+    @friendship = user.friendships.where(friend_id: params[:friend_id]).first ||
+                  user.inverse_friendships.where(friend_id: params[:user_id]).first
+    if @friendship.present? # Can't call exists on a single record
       @friendship.delete
       render status: :ok, json: {
         message: 'Successfully deleted friendship'
       }.to_json
     else
       render status: :bad_request, json: {
-        message: "No friendship to delete"
+        message: 'No friendship to delete'
       }
     end
   end

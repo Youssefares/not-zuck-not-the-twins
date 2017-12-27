@@ -19,5 +19,4 @@ Rails.application.routes.draw do
     post 'accept_friend_request', action: :accept_friend_request
     post 'delete_friendship', action: :delete_friendship
   end
-
 end

@@ -18,8 +18,8 @@ matrix:
         # Run style checks
         - rubocop
 
-    # - language: javascript
-    #   before_script:
-    #     - cd view-app
-    #   script:
-    #     - yarn
+    - language: javascript
+      before_script:
+        - cd view-app
+      script:
+        - yarn

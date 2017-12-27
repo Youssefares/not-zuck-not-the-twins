@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "api": "cd api && rails s -p 4000",
+    "view": "cd view-app && yarn start"
+  }
+}
