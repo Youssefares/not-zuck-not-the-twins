@@ -5,27 +5,27 @@ require 'rails_helper'
 RSpec.describe PostsController, type: :routing do
   describe 'routing' do
     it 'routes to #index' do
-      expect(get: '/posts').to route_to('posts#index')
+      expect(get: 'users/1/posts').to route_to('posts#index', user_id: '1')
     end
 
     it 'routes to #show' do
-      expect(get: '/posts/1').to route_to('posts#show', id: '1')
+      expect(get: 'users/1/posts/1').to route_to('posts#show', id: '1', user_id: '1')
     end
 
     it 'routes to #create' do
-      expect(post: '/posts').to route_to('posts#create')
+      expect(post: 'users/1/posts').to route_to('posts#create', user_id: '1')
     end
 
     it 'routes to #update via PUT' do
-      expect(put: '/posts/1').to route_to('posts#update', id: '1')
+      expect(put: 'users/1/posts/1').to route_to('posts#update', id: '1', user_id: '1')
     end
 
     it 'routes to #update via PATCH' do
-      expect(patch: '/posts/1').to route_to('posts#update', id: '1')
+      expect(patch: 'users/1/posts/1').to route_to('posts#update', id: '1', user_id: '1')
     end
 
     it 'routes to #destroy' do
-      expect(delete: '/posts/1').to route_to('posts#destroy', id: '1')
+      expect(delete: 'users/1/posts/1').to route_to('posts#destroy', id: '1', user_id: '1')
     end
   end
 end

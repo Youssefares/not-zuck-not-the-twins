@@ -2,5 +2,5 @@
 
 require 'rails_helper'
 
-RSpec.describe RegistrationsController, type: :controller do
+RSpec.describe DevisePatch::RegistrationsController, type: :controller do
 end
