@@ -1,5 +1,5 @@
 ## Social Network in Rails `--api` / ReactJS / Graphql
-[![Build Status](https://travis-ci.org/Youssefares/not-zuck-not-the-twins.svg?branch=master)](https://travis-ci.org/Youssefares/not-zuck-not-the-twins)
+[![Build Status](https://travis-ci.org/Youssefares/not-zuck-not-the-twins.svg?branch=master)](https://travis-ci.org/Youssefares/not-zuck-not-the-twins) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/2ba319e861534e76a6b8fed43d78a671)](https://www.codacy.com/app/Youssefares/not-zuck-not-the-twins?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Youssefares/not-zuck-not-the-twins&amp;utm_campaign=Badge_Grade)
 
 We beat everybody to it!
 
