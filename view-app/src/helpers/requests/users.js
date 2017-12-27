@@ -45,9 +45,7 @@ function friendRequests(id) {
     method: 'GET',
     headers: headers(),
     mode: 'cors',
-  }).then((response) => {
-    return response.json();
-  });
+  }).then(response => response.json());
 }
 
 function acceptFriendRequest(id, friendId) {

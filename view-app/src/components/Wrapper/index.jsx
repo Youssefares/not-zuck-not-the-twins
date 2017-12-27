@@ -5,7 +5,6 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect,
 } from 'react-router-dom';
 
 
@@ -57,7 +56,6 @@ Wrapper.propTypes = {
   deauthenticateUser: PropTypes.func.isRequired,
   currentUser: PropTypes.number.isRequired,
   currentName: PropTypes.string.isRequired,
-  currentEmail: PropTypes.string.isRequired,
   currentImage: PropTypes.string.isRequired,
 };
 export default Wrapper;

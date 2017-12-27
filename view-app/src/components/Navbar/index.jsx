@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { Card, Modal, Header, Button, Input, Menu, Image, Grid } from 'semantic-ui-react';
+import { Card, Modal, Button, Input, Menu, Image, Grid } from 'semantic-ui-react';
 
 import { deauthenticateUser } from '../../helpers/auth';
 import FriendRequest from '../FriendRequest';

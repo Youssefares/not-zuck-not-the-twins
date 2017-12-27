@@ -76,8 +76,7 @@ Profile.defaultProps = {
   gender: 'Prefers not to specify',
   relationship_status: 'single',
   birthdate: 'not given',
-  about: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam finibus volutpat laoreet.\
-    Etiam consectetur et diam sed elementum. Mauris malesuada in magna et pharetra.',
+  about: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam finibus volutpat laoreet.',
 };
 
 export default Profile;
